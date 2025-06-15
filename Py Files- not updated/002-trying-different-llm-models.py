@@ -9,7 +9,7 @@ llamaChatModel = ChatGroq(
 )
 
 mistralChatModel = ChatGroq(
-    model="mixtral-8x7b-32768"
+    model="mistral-saba-24b"
 )
 
 messages = [
