@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv, find_dotenv
 _ = load_dotenv(find_dotenv())
 openai_api_key = os.environ["OPENAI_API_KEY"]
+os.environ["LANGCHAIN_PROJECT"] = "multimodal"
 
 from langchain_openai import ChatOpenAI
 
@@ -57,18 +58,18 @@ table_elements = [i.text for i in table_elements]
 text_elements = [i.text for i in text_elements]
 
 # Imprime la cantidad de tablas encontradas
-printf("\n----------\n")
-printf("Cantidad de elementos tipo tabla en el archivo PDF:")
-printf("\n----------\n")
-printf(len(table_elements))
-printf("\n----------\n")
+print("\n----------\n")
+print("Cantidad de elementos tipo tabla en el archivo PDF:")
+print("\n----------\n")
+print(len(table_elements))
+print("\n----------\n")
 
 # Imprime la cantidad de textos encontrados
-printf("\n----------\n")
-printf("Cantidad de elementos tipo texto en el archivo PDF:")
-printf("\n----------\n")
-printf(len(text_elements))
-printf("\n----------\n")
+print("\n----------\n")
+print("Cantidad de elementos tipo texto en el archivo PDF:")
+print("\n----------\n")
+print(len(text_elements))
+print("\n----------\n")
 
 # Procesa las imágenes extraídas y las codifica en base64
 for image_file in os.listdir(output_path):
@@ -78,11 +79,11 @@ for image_file in os.listdir(output_path):
         image_elements.append(encoded_image)
 
 # Imprime la cantidad de imágenes encontradas
-printf("\n----------\n")
-printf("Cantidad de elementos tipo imagen en el archivo PDF:")
-printf("\n----------\n")
-printf(len(image_elements))
-printf("\n----------\n")
+print("\n----------\n")
+print("Cantidad de elementos tipo imagen en el archivo PDF:")
+print("\n----------\n")
+print(len(image_elements))
+print("\n----------\n")
 
 from langchain.schema.messages import HumanMessage, AIMessage
 
