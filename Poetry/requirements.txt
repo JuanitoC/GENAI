@@ -1,0 +1,14 @@
+# ========================================
+# REQUIREMENTS.TXT DE EJEMPLO
+# ========================================
+
+# Librerías de producción
+requests==2.31.0
+pandas==2.1.4
+numpy==1.24.3
+python-dotenv==1.0.0
+
+# Librerías de desarrollo
+pytest==7.4.3
+black==23.11.0
+flake8==6.1.0 

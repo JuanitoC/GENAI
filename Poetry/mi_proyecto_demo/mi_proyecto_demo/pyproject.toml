@@ -1,0 +1,19 @@
+[project]
+name = "mi-proyecto-demo"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Juan",email = "62204046+JuanitoC@users.noreply.github.com"}
+]
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+]
+
+[tool.poetry]
+packages = [{include = "mi_proyecto_demo", from = "src"}]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
