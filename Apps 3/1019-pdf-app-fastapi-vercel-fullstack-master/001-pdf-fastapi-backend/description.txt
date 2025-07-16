@@ -1,0 +1,61 @@
+# Arquitectura y funcionamiento de la app FastAPI PDF CRUD
+
+## ¿Qué hace la app?
+Esta aplicación es una API backend desarrollada con FastAPI que permite gestionar archivos PDF. Sus principales funciones son:
+- Subir archivos PDF y almacenarlos en AWS S3.
+- Guardar metadatos de los PDFs en una base de datos PostgreSQL.
+- Consultar, actualizar, eliminar y filtrar PDFs mediante endpoints REST.
+
+## ¿Qué hace cada archivo Python?
+- **main.py**: Punto de entrada de la app. Configura FastAPI, CORS, excepciones globales y enruta las peticiones al router de PDFs.
+- **routers/pdfs.py**: Define los endpoints REST para crear, subir, listar, obtener, actualizar y eliminar PDFs. Gestiona la sesión de base de datos por petición.
+- **crud.py**: Implementa la lógica de negocio para crear, leer, actualizar, eliminar y subir PDFs a S3. Separa la lógica de acceso a datos de los endpoints.
+- **models.py**: Define el modelo ORM (SQLAlchemy) para la tabla 'pdfs' en la base de datos.
+- **schemas.py**: Define los esquemas de Pydantic para validar y estructurar los datos de entrada y salida relacionados con PDFs.
+- **database.py**: Configura la conexión a la base de datos PostgreSQL y la sesión SQLAlchemy.
+- **config.py**: Gestiona la configuración de la app y las credenciales de AWS S3 usando variables de entorno.
+
+## ¿Qué notebooks hay?
+No hay notebooks en la carpeta backend. Toda la lógica está implementada en archivos Python.
+
+## Resumen de la arquitectura
+- **FastAPI** como framework principal para exponer la API REST.
+- **SQLAlchemy** para la gestión ORM y conexión a PostgreSQL.
+- **Pydantic** para validación y serialización de datos.
+- **AWS S3** para almacenamiento de archivos PDF.
+- **Routers** para organizar los endpoints.
+- **Separación de capas**: endpoints (routers), lógica de negocio (crud), modelos (models), esquemas (schemas), configuración (config), y base de datos (database).
+
+## Ejemplos de uso y funcionamiento interno
+
+### 1. Subir un PDF
+- El usuario hace una petición POST a `/pdfs/upload` con un archivo PDF.
+- El endpoint genera un nombre único, sube el archivo a S3 y guarda la URL en la base de datos.
+- Respuesta: JSON con los datos del PDF subido.
+
+### 2. Crear un PDF manualmente
+- El usuario hace una petición POST a `/pdfs` con un JSON (nombre, seleccionado, url).
+- Se guarda el registro en la base de datos.
+
+### 3. Listar PDFs
+- GET `/pdfs` devuelve todos los PDFs.
+- GET `/pdfs?selected=true` filtra solo los seleccionados.
+
+### 4. Obtener PDF por ID
+- GET `/pdfs/{id}` devuelve los datos del PDF si existe.
+
+### 5. Actualizar PDF
+- PUT `/pdfs/{id}` permite modificar los campos de un PDF existente.
+
+### 6. Eliminar PDF
+- DELETE `/pdfs/{id}` elimina el registro de la base de datos.
+
+### Flujo interno resumido
+1. El router recibe la petición y obtiene una sesión de base de datos.
+2. Llama a la función correspondiente en crud.py.
+3. Si es necesario, interactúa con AWS S3 (subida de archivos).
+4. Devuelve la respuesta serializada usando los esquemas de Pydantic.
+
+---
+
+**Nota:** Para que la app funcione, es necesario tener configuradas las variables de entorno para la base de datos y AWS en un archivo `.env`. 

@@ -1,0 +1,55 @@
+# Arquitectura y funcionamiento del frontend PDF CRUD (Next.js)
+
+## ¿Qué hace la app?
+Esta aplicación es un frontend desarrollado con Next.js y React que permite:
+- Visualizar una lista de archivos PDF almacenados en el backend.
+- Subir nuevos archivos PDF.
+- Editar el nombre y el estado de selección de cada PDF.
+- Filtrar los PDFs por seleccionados/no seleccionados.
+- Eliminar PDFs.
+
+## ¿Qué hace cada archivo JavaScript relevante?
+- **components/layout.js**: Componente de layout general. Proporciona el marco visual, título y subtítulo de la app.
+- **components/pdf-list.js**: Lógica principal de la lista de PDFs. Gestiona la carga, filtrado, subida, edición y borrado de PDFs.
+- **components/pdf.js**: Renderiza cada PDF individual, permitiendo editar su nombre, marcarlo como seleccionado, visualizarlo o eliminarlo.
+- **pages/index.js**: Página principal. Muestra el layout y la lista de PDFs.
+- **pages/_app.js**: Inicialización global de la app Next.js. Aplica estilos globales y renderiza la página correspondiente.
+- **pages/_document.js**: Estructura HTML base personalizada para la app Next.js.
+- **pages/api/hello.js**: Endpoint de ejemplo generado por Next.js. No se utiliza en la lógica de la app.
+
+## Resumen de la arquitectura
+- **Next.js** como framework principal para el frontend (renderizado SSR/CSR).
+- **React** para la composición de componentes y gestión de estado.
+- **Estilos CSS** por módulos para cada componente.
+- **Comunicación con el backend** mediante fetch a la API REST (usando la variable de entorno `NEXT_PUBLIC_API_URL`).
+- **Separación de componentes**: layout, lista de PDFs y PDF individual.
+- **Gestión de estado** con hooks de React (`useState`, `useEffect`, `useCallback`).
+
+## Ejemplos de uso y funcionamiento interno
+
+### 1. Visualizar PDFs
+- Al cargar la página, se hace un fetch al backend para obtener la lista de PDFs y se muestran en pantalla.
+
+### 2. Subir un PDF
+- El usuario selecciona un archivo y pulsa "Load PDF".
+- Se envía el archivo al backend mediante un formulario y, si la subida es exitosa, se añade a la lista.
+
+### 3. Editar nombre o selección de un PDF
+- El usuario puede editar el nombre o marcar/desmarcar el checkbox de selección.
+- El cambio se envía automáticamente al backend (con debounce para evitar llamadas excesivas).
+
+### 4. Filtrar PDFs
+- Hay botones para ver todos, solo los seleccionados o solo los no seleccionados.
+- Al pulsar un filtro, se hace un fetch al backend con el filtro correspondiente.
+
+### 5. Eliminar un PDF
+- El usuario pulsa el botón de eliminar y el PDF se borra tanto en el backend como en la interfaz.
+
+### Flujo interno resumido
+1. El usuario interactúa con la interfaz (sube, edita, filtra o elimina PDFs).
+2. El frontend realiza peticiones HTTP al backend para reflejar los cambios.
+3. El estado local se actualiza para mostrar la información más reciente.
+
+---
+
+**Nota:** Para que la app funcione correctamente, la variable de entorno `NEXT_PUBLIC_API_URL` debe apuntar al backend FastAPI desplegado. 
