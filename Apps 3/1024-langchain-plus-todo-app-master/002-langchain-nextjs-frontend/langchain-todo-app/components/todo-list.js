@@ -1,15 +1,22 @@
+// todo-list.js
+// Componente principal para mostrar, filtrar, crear, editar y eliminar tareas (ToDo)
+
 import styles from '../styles/todo-list.module.css'
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { debounce } from 'lodash'
 import ToDo from './todo'
 
 export default function ToDoList() {
+  // Estado para la lista de tareas
   const [todos, setTodos] = useState(null)
+  // Estado para el input principal
   const [mainInput, setMainInput] = useState('')
+  // Estado para el filtro de tareas
   const [filter, setFilter] = useState()
+  // Referencia para evitar múltiples fetchs
   const didFetchRef = useRef(false)
   
-
+  // Cargar las tareas al montar el componente
   useEffect(() => {
     if (didFetchRef.current === false) {
       didFetchRef.current = true
@@ -17,6 +24,7 @@ export default function ToDoList() {
     }
   }, [])
 
+  // Función para obtener las tareas desde el backend, opcionalmente filtrando por 'completed'
   async function fetchTodos(completed) {
     let path = '/todos'
     if (completed !== undefined) {
@@ -27,8 +35,10 @@ export default function ToDoList() {
     setTodos(json)
   }
 
+  // Actualización de tarea con debounce para evitar llamadas excesivas
   const debouncedUpdateTodo = useCallback(debounce(updateTodo, 500), [])
 
+  // Maneja el cambio de campos en una tarea (checkbox o texto)
   function handleToDoChange(e, id) {
     const target = e.target
     const value = target.type === 'checkbox' ? target.checked : target.value
@@ -44,6 +54,7 @@ export default function ToDoList() {
     setTodos(copy)
   }
 
+  // Actualiza una tarea en el backend
   async function updateTodo(todo) {
     const data = {
       name: todo.name,
@@ -58,6 +69,7 @@ export default function ToDoList() {
     })
   }
 
+  // Crea una nueva tarea en el backend
   async function addToDo(name) {
     const res = await fetch(process.env.NEXT_PUBLIC_API_URL + `/todos/`, {
       method: 'POST',
@@ -76,6 +88,7 @@ export default function ToDoList() {
     }
   }
 
+  // Elimina una tarea por su ID
   async function handleDeleteToDo(id) {
     const res = await fetch(process.env.NEXT_PUBLIC_API_URL + `/todos/${id}`, {
       method: 'DELETE',
@@ -91,10 +104,12 @@ export default function ToDoList() {
     }
   }
   
+  // Maneja el cambio en el input principal
   function handleMainInputChange(e) {
     setMainInput(e.target.value)
   }
 
+  // Maneja el evento Enter para crear una nueva tarea
   function handleKeyDown(e) {
     if (e.key === 'Enter') {
       if (mainInput.length > 0) {
@@ -104,19 +119,24 @@ export default function ToDoList() {
     }
   }
 
+  // Cambia el filtro de tareas (todas, activas, completadas)
   function handleFilterChange(value) {
     setFilter(value)
     fetchTodos(value)
   }
 
+  // Renderizado del componente
   return (
     <div className={styles.container}>
       <div className={styles.mainInputContainer}>
+        {/* Input para crear una nueva tarea */}
         <input className={styles.mainInput} placeholder="What needs to be done?" value={mainInput} onChange={(e) => handleMainInputChange(e)} onKeyDown={handleKeyDown}></input>
       </div>
+      {/* Mensaje de carga si no hay tareas */}
       {!todos && (
         <div>Loading...</div>
       )}
+      {/* Renderiza cada tarea usando el componente ToDo */}
       {todos && (
         <div>
           {todos.map((todo) => {
@@ -126,6 +146,7 @@ export default function ToDoList() {
           })}
         </div>
       )}
+      {/* Botones de filtro */}
       <div className={styles.filters}>
         <button className={`${styles.filterBtn} ${filter === undefined && styles.filterActive}`} onClick={() => handleFilterChange()}>All</button>
         <button className={`${styles.filterBtn} ${filter === false && styles.filterActive}`} onClick={() => handleFilterChange(false)}>Active</button>

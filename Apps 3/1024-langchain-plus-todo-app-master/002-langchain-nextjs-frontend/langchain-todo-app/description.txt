@@ -1,0 +1,52 @@
+# Descripción y arquitectura del frontend LangChain ToDo (Next.js)
+
+## ¿Qué hace la app?
+Esta aplicación es un frontend desarrollado con Next.js y React que permite:
+- Visualizar, crear, editar, filtrar y eliminar tareas (ToDo) conectándose al backend.
+- Generar poemas a partir de las tareas usando la integración con LangChain y OpenAI.
+
+## ¿Qué hace cada archivo JavaScript relevante?
+- **components/layout.js**: Componente de layout general. Proporciona el marco visual, título y subtítulo de la app.
+- **components/todo-list.js**: Lógica principal de la lista de tareas. Gestiona la carga, filtrado, creación, edición y borrado de tareas.
+- **components/todo.js**: Renderiza cada tarea individual, permitiendo editar su nombre, marcarla como completada, generar un poema o eliminarla.
+- **pages/index.js**: Página principal. Muestra el layout y la lista de tareas.
+- **pages/_app.js**: Inicialización global de la app Next.js. Aplica estilos globales y renderiza la página correspondiente.
+- **pages/_document.js**: Estructura HTML base personalizada para la app Next.js.
+- **pages/api/hello.js**: Endpoint de ejemplo generado por Next.js. No se utiliza en la lógica de la app.
+
+## Resumen de la arquitectura
+- **Next.js** como framework principal para el frontend (renderizado SSR/CSR).
+- **React** para la composición de componentes y gestión de estado.
+- **Estilos CSS** por módulos para cada componente.
+- **Comunicación con el backend** mediante fetch a la API REST (usando la variable de entorno `NEXT_PUBLIC_API_URL`).
+- **Separación de componentes**: layout, lista de tareas y tarea individual.
+- **Gestión de estado** con hooks de React (`useState`, `useEffect`, `useCallback`).
+
+## Ejemplos de uso y funcionamiento interno
+
+### 1. Visualizar tareas
+- Al cargar la página, se hace un fetch al backend para obtener la lista de tareas y se muestran en pantalla.
+
+### 2. Crear una tarea
+- El usuario escribe en el input y pulsa Enter. Se envía la tarea al backend y se añade a la lista.
+
+### 3. Editar nombre o estado de una tarea
+- El usuario puede editar el nombre o marcar/desmarcar el checkbox de completado. El cambio se envía automáticamente al backend (con debounce para evitar llamadas excesivas).
+
+### 4. Filtrar tareas
+- Hay botones para ver todas, solo las activas o solo las completadas. Al pulsar un filtro, se hace un fetch al backend con el filtro correspondiente.
+
+### 5. Eliminar una tarea
+- El usuario pulsa el botón de eliminar y la tarea se borra tanto en el backend como en la interfaz.
+
+### 6. Generar poema de una tarea
+- El usuario pulsa el botón "Generate Poem" y se muestra un poema generado por el backend usando LangChain y OpenAI.
+
+### Flujo interno resumido
+1. El usuario interactúa con la interfaz (crea, edita, filtra, elimina tareas o genera poemas).
+2. El frontend realiza peticiones HTTP al backend para reflejar los cambios.
+3. El estado local se actualiza para mostrar la información más reciente.
+
+---
+
+**Nota:** Para que la app funcione correctamente, la variable de entorno `NEXT_PUBLIC_API_URL` debe apuntar al backend FastAPI desplegado. 

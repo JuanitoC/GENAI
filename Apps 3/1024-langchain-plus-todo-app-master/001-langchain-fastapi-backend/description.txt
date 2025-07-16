@@ -1,0 +1,54 @@
+# Descripción y arquitectura del backend LangChain ToDo (FastAPI)
+
+## ¿Qué hace la app?
+Esta aplicación es una API backend desarrollada con FastAPI que permite:
+- Gestionar tareas (ToDo) con operaciones CRUD.
+- Generar resúmenes y poemas a partir de las tareas usando LangChain y OpenAI.
+
+## ¿Qué hace cada archivo Python relevante?
+- **config.py**: Configuración de variables de entorno y parámetros globales de la app.
+- **crud.py**: Lógica de negocio para crear, leer, actualizar y eliminar tareas.
+- **database.py**: Configuración de la conexión a la base de datos PostgreSQL y la sesión SQLAlchemy.
+- **main.py**: Punto de entrada de la app. Configura FastAPI, CORS, excepciones globales y enruta las peticiones al router de tareas.
+- **models.py**: Define el modelo ORM (SQLAlchemy) para la tabla 'todos'.
+- **schemas.py**: Esquemas de Pydantic para validar y estructurar los datos de entrada y salida relacionados con tareas.
+- **routers/todos.py**: Define los endpoints REST para crear, listar, obtener, actualizar y eliminar tareas. Incluye endpoints para resumir texto y generar poemas usando LangChain.
+
+## Resumen de la arquitectura
+- **FastAPI** como framework principal para exponer la API REST.
+- **SQLAlchemy** para la gestión ORM y conexión a PostgreSQL.
+- **Pydantic** para validación y serialización de datos.
+- **LangChain + OpenAI** para generación de resúmenes y poemas a partir de las tareas.
+- **Separación de capas**: endpoints (routers), lógica de negocio (crud), modelos (models), esquemas (schemas), configuración (config), y base de datos (database).
+
+## Ejemplos de uso y funcionamiento interno
+
+### 1. Crear una tarea
+- POST `/todos` con JSON `{ "name": "Comprar pan", "completed": false }`.
+- Se guarda la tarea en la base de datos.
+
+### 2. Listar tareas
+- GET `/todos` devuelve todas las tareas.
+- GET `/todos?completed=true` filtra solo las completadas.
+
+### 3. Actualizar tarea
+- PUT `/todos/{id}` permite modificar el nombre o el estado de completado.
+
+### 4. Eliminar tarea
+- DELETE `/todos/{id}` elimina la tarea de la base de datos.
+
+### 5. Resumir texto
+- POST `/todos/summarize-text` con un texto. Devuelve un resumen generado por LLMChain.
+
+### 6. Generar poema de una tarea
+- POST `/todos/write-poem/{id}` genera un poema corto a partir del nombre de la tarea usando LLMChain.
+
+### Flujo interno resumido
+1. El router recibe la petición y obtiene una sesión de base de datos.
+2. Llama a la función correspondiente en crud.py.
+3. Si es necesario, interactúa con LangChain y OpenAI para generar texto.
+4. Devuelve la respuesta serializada usando los esquemas de Pydantic.
+
+---
+
+**Nota:** Para que la app funcione, es necesario tener configuradas las variables de entorno para la base de datos y la API de OpenAI en un archivo `.env`. 
