@@ -1,0 +1,71 @@
+# Descripción y arquitectura de la aplicación RAG Avanzado
+
+## Arquitectura del Backend
+
+El backend está construido con FastAPI y LangChain, y se encarga de:
+- Exponer una API REST para subir PDFs, procesarlos y realizar consultas RAG (Retrieval-Augmented Generation).
+- Gestionar la carga y procesamiento de PDFs, dividiéndolos en chunks y almacenando sus embeddings en una base de datos PostgreSQL usando PGVector.
+- Implementar una cadena RAG avanzada con memoria conversacional, permitiendo mantener el contexto de la conversación y mejorar la experiencia de chat.
+- Integrar modelos de lenguaje de OpenAI para la generación de respuestas y embeddings.
+- Servir archivos PDF como recursos estáticos para su descarga o visualización desde el frontend.
+
+### Flujo general del backend:
+1. El usuario sube uno o varios PDFs mediante la API `/upload`.
+2. El usuario puede lanzar el procesamiento de PDFs con `/load-and-process-pdfs`, que ejecuta un script para cargar, dividir y vectorizar los documentos.
+3. Las consultas del usuario se envían al endpoint `/rag/stream`, que utiliza la cadena RAG para recuperar información relevante y generar respuestas usando el LLM.
+4. El historial de la conversación se almacena en PostgreSQL para mantener el contexto entre preguntas.
+
+## Arquitectura del Frontend
+
+El frontend está construido con React (TypeScript) y Tailwind CSS, y se encarga de:
+- Proveer una interfaz de chat donde el usuario puede escribir preguntas y recibir respuestas generadas por el backend.
+- Permitir la subida de archivos PDF y el lanzamiento del procesamiento de los mismos.
+- Mostrar las fuentes (PDFs) utilizadas para responder cada pregunta, permitiendo su descarga.
+- Mantener el estado de la conversación y mostrar el historial de mensajes.
+
+### Flujo general del frontend:
+1. El usuario interactúa con la interfaz de chat, enviando preguntas y recibiendo respuestas en tiempo real (streaming).
+2. El usuario puede subir PDFs y lanzar su procesamiento desde la misma interfaz.
+3. Las fuentes de cada respuesta se muestran como enlaces descargables.
+
+## Notebooks
+No hay notebooks (`.ipynb`) en este proyecto. Toda la lógica está implementada en archivos Python y TypeScript/JavaScript.
+
+## 5 Casos de Uso
+
+1. **Chat con PDFs privados**
+   - El usuario sube varios PDFs y realiza preguntas sobre su contenido. El sistema responde usando información extraída de los documentos.
+
+2. **Recuperación de contexto conversacional**
+   - El usuario realiza una pregunta de seguimiento (por ejemplo, "¿y el siguiente capítulo?"). El sistema utiliza el historial de la conversación para entender el contexto y responder correctamente.
+
+3. **Descarga de fuentes**
+   - El usuario recibe una respuesta y puede descargar el PDF exacto que fue utilizado como fuente para esa respuesta.
+
+4. **Carga y procesamiento masivo de PDFs**
+   - El usuario sube múltiples PDFs y ejecuta el procesamiento en lote, indexando todos los documentos en la base de datos vectorial para consultas futuras.
+
+5. **Actualización dinámica del corpus**
+   - El usuario puede añadir nuevos PDFs en cualquier momento y volver a procesar el corpus, permitiendo que el sistema esté siempre actualizado con la información más reciente.
+
+## Detalle de cada fichero .py y .js
+
+### Backend (.py)
+- **app/rag_chain.py**: Construye la cadena RAG usando LangChain, OpenAI y PGVector. Implementa recuperación de contexto, generación de respuestas y memoria conversacional.
+- **app/server.py**: Servidor FastAPI. Expone endpoints para subir PDFs, procesarlos, servir archivos estáticos y consultar la cadena RAG. Integra LangServe para exponer la cadena como API.
+- **rag-data-loader/rag_load_and_process.py**: Script para cargar PDFs, dividirlos en chunks semánticos y vectorizarlos usando embeddings de OpenAI y PGVector.
+- **app/__init__.py**: Archivo vacío para marcar el paquete Python.
+- **tests/__init__.py**: Archivo vacío para marcar el paquete de tests.
+
+### Frontend (.js/.tsx)
+- **frontend/src/App.tsx**: Componente principal de React. Gestiona el chat, subida/procesamiento de PDFs, integración con el backend y visualización de fuentes.
+- **frontend/src/index.tsx**: Punto de entrada de la app React. Monta el componente principal en el DOM.
+- **frontend/src/App.test.tsx**: Test básico para comprobar que la app se renderiza correctamente.
+- **frontend/src/reportWebVitals.ts**: Permite medir y reportar métricas de rendimiento web en la app React.
+- **frontend/src/setupTests.ts**: Configuración de Jest y Testing Library para los tests de React.
+- **frontend/src/react-app-env.d.ts**: Declaración de tipos para el entorno de React Scripts.
+- **frontend/src/App.css, index.css**: Estilos CSS para la app y configuración de Tailwind.
+
+---
+
+**Nota:** Para que la app funcione correctamente, es necesario tener configuradas las variables de entorno para las claves de OpenAI y la conexión a PostgreSQL, y tener los servicios de base de datos y backend en ejecución. 

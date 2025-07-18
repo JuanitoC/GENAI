@@ -9,7 +9,6 @@ from botocore.exceptions import NoCredentialsError, BotoCoreError
 
 # Crear un nuevo registro PDF en la base de datos
 # Recibe un objeto PDFRequest y lo almacena en la tabla PDF
-
 def create_pdf(db: Session, pdf: schemas.PDFRequest):
     db_pdf = models.PDF(name=pdf.name, selected=pdf.selected, file=pdf.file)
     db.add(db_pdf)
