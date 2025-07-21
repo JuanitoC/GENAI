@@ -1,0 +1,45 @@
+# ========================================
+# REQUIREMENTS.TXT ACTUALIZADO PARA GENAI
+# ========================================
+
+# Librerías principales de IA y agentes
+langchain
+langchain-openai
+langchain-community
+langchain-chroma
+openai
+
+pydantic
+jupyterlab
+pandas
+tiktoken
+lxml
+
+# Multimodalidad y procesamiento de PDFs/imágenes
+tesseract
+pytesseract
+unstructured[all-docs]
+beautifulsoup4
+requests
+
+# Almacenamiento y vectores
+chromadb
+
+# Utilidades adicionales
+uuid
+
+# Otras dependencias útiles
+bs4
+dotenv 
+
+# Librerías de desarrollo
+pytest
+black
+flake8
+
+# NOTA: Si usas agentes avanzados, puedes necesitar:
+faiss-cpu
+crewai
+crewai_tools
+rapidfuzz
+thefuzz
