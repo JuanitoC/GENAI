@@ -1,6 +1,6 @@
 [project]
-name = "mi-proyecto-demo"
-version = "0.1.1"
+name = "env"
+version = "0.1.0"
 description = ""
 authors = [
     {name = "Juan",email = "62204046+JuanitoC@users.noreply.github.com"}
@@ -8,15 +8,11 @@ authors = [
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-    "pandas (>=2.3.1,<3.0.0)"
 ]
 
 [tool.poetry]
-packages = [{include = "mi_proyecto_demo", from = "src"}]
+packages = [{include = "env", from = "src"}]
 
-
-[tool.poetry.group.dev.dependencies]
-pytest = "^8.4.1"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
