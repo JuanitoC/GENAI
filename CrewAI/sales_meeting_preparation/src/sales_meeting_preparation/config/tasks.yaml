@@ -1,0 +1,45 @@
+research_company:
+  description: >
+    Research the target company ({company}) using the web and public sources.
+    Focus on the company's business model, products/services, industry position,
+    recent news, major initiatives, partnerships, and financial or strategic highlights.
+    Identify potential business challenges or innovation opportunities where Generative AI
+    solutions could add value.
+  expected_output: >
+    A concise, well-organized summary of the company's core business, recent activities,
+    strategic direction, and potential areas for applying Generative AI. Include key facts
+    and recent news headlines that could be used to tailor a sales conversation.
+
+profile_executive:
+  description: >
+    Research the key executive ({person}) who will attend the sales meeting.
+    Identify relevant background details such as role, career history, public interviews,
+    speaking engagements, thought leadership, and personal interests.
+    Uncover any indicators of openness to innovation or digital transformation.
+  expected_output: >
+    A clear, informative profile of the executive including professional background,
+    public statements, and insights into their strategic focus or mindset—especially
+    as it relates to innovation, technology, and business leadership.
+
+generate_sales_pitch:
+  description: >
+    Based on the company and executive research, create a brief and compelling
+    sales pitch tailored to this prospect. The pitch should demonstrate how our
+    Generative AI services (training, consulting, development) can support their goals.
+    Suggest 2–3 talking points or use cases relevant to their context.
+  expected_output: >
+    A short, persuasive pitch tailored to the prospect’s needs, including 2–3 key
+    talking points that illustrate the value of Generative AI for their company.
+    The pitch should feel personalized and strategic, not generic.
+
+finalize_report:
+  description: >
+    Combine all findings into a polished markdown report for the upcoming sales call.
+    Ensure clarity, conciseness, and strategic value. Use headings and bullet points
+    for readability. The report should include an executive summary, company overview,
+    executive profile, and the tailored sales pitch.
+  expected_output: >
+    A well-structured markdown report formatted with headings and bullet points.
+    The report should include: (1) a short executive summary; (2) company insights;
+    (3) executive profile; and (4) tailored sales pitch suggestions. The tone should
+    be professional and strategic, suitable for internal use by our sales team.

@@ -1,0 +1,46 @@
+draft_personalized_cold_email:
+  description: >
+    Write a short, direct cold email using the lead’s personal and company profile.
+    Focus on personalization by referencing their name, title, company, and relevant business context.
+    The tone should be friendly and confident—showing you understand who they are and why AI Accelera is relevant to them.
+
+    Guidelines:
+    - No greetings or sign-offs.
+    - No fluff — just relevance and value.
+    - Use simple, clear language.
+    - Treat this as the first cold email — they've never heard from us before.
+
+    Company Context:
+    - AI Accelera provides Generative AI Services (training, consulting, incubation, VC)
+    - Target Audience: Enterprise businesses seeking to implement Generative AI
+    - Value Proposition: We help increase ROI with GenAI
+
+    Use the following information:
+    - Personal Info: {personal_info}
+    - Company Info: {company_info}
+    - Engagement Fit: {engagement_fit}
+  expected_output: >
+    A personalized cold email draft that:
+    - Mentions the lead by name
+    - Clearly shows relevance to their role and company
+    - Suggests a problem or opportunity AI Accelera can help with
+
+optimize_for_response:
+  description: >
+    Improve the cold email by adding a strong, clear CTA and one or two subtle engagement hooks.
+    These should encourage the lead to take a next step, such as replying, scheduling a call, or expressing interest.
+
+    Guidelines:
+    - Keep it short and actionable
+    - No greetings or sign-offs
+    - No complicated phrasing
+    - Optimize for high reply rates
+
+    Company Context:
+    - AI Accelera provides Generative AI Services (training, consulting, incubation, VC)
+    - Target Audience: Enterprise businesses seeking to implement Generative AI
+    - Value Proposition: We help increase ROI with GenAI
+  expected_output: >
+    A polished email ready to send, including:
+    - A high-impact CTA (e.g., book a time, reply with interest)
+    - Subtle engagement triggers to encourage action now

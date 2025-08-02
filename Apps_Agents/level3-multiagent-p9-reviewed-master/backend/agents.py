@@ -1,3 +1,24 @@
+"""
+RESUMEN DEL ARCHIVO:
+Este archivo define los agentes de inteligencia artificial utilizados en el sistema
+de investigación multiagente. Los agentes están diseñados para realizar investigaciones
+especializadas sobre tecnologías en diferentes áreas de negocio.
+
+Arquitectura de Agentes:
+- Research Manager: Coordina y agrega resultados de múltiples investigaciones
+- Research Agent: Realiza investigaciones específicas sobre tecnologías y áreas de negocio
+
+Características principales:
+- Integración con OpenAI GPT-4 Turbo
+- Herramientas de búsqueda web (SerperDev) y YouTube
+- Roles y objetivos bien definidos para cada agente
+- Capacidad de delegación entre agentes
+- Configuración de verbosidad para debugging
+
+Los agentes trabajan en conjunto para encontrar artículos de blog y videos de YouTube
+relevantes sobre tecnologías específicas en diferentes áreas de negocio.
+"""
+
 from typing import List
 from crewai import Agent
 from langchain_openai import ChatOpenAI
@@ -6,13 +27,50 @@ from tools.youtube_search_tools import YoutubeVideoSearchTool
 
 
 class ResearchAgents():
+    """
+    Clase que define y configura los agentes de investigación para el sistema multiagente.
+    
+    Esta clase encapsula la creación y configuración de agentes especializados
+    que pueden realizar investigaciones sobre tecnologías en diferentes áreas de negocio.
+    Cada agente tiene herramientas específicas y objetivos bien definidos.
+    """
 
     def __init__(self):
-        self.searchInternetTool = SerperDevTool()
-        self.youtubeSearchTool = YoutubeVideoSearchTool()
-        self.llm = ChatOpenAI(model="gpt-4-turbo-preview")
+        """
+        Inicializa la clase ResearchAgents configurando las herramientas y el modelo LLM.
+        
+        Configura:
+        - Herramienta de búsqueda web (SerperDev)
+        - Herramienta de búsqueda de YouTube
+        - Modelo de lenguaje OpenAI GPT-4 Turbo
+        """
+        self.searchInternetTool = SerperDevTool()  # Herramienta para búsquedas web
+        self.youtubeSearchTool = YoutubeVideoSearchTool()  # Herramienta para búsquedas en YouTube
+        self.llm = ChatOpenAI(model="gpt-4-turbo-preview")  # Modelo de lenguaje avanzado
 
     def research_manager(self, technologies: List[str], businessareas: List[str]) -> Agent:
+        """
+        Crea y configura el agente Research Manager.
+        
+        El Research Manager es responsable de coordinar y agregar los resultados
+        de múltiples investigaciones realizadas por Research Agents. Actúa como
+        un supervisor que asegura que se complete la investigación para todas las
+        combinaciones de tecnologías y áreas de negocio.
+        
+        Args:
+            technologies (List[str]): Lista de tecnologías a investigar
+            businessareas (List[str]): Lista de áreas de negocio a investigar
+            
+        Returns:
+            Agent: Agente configurado con rol de Research Manager
+            
+        Características del agente:
+        - Rol: Research Manager
+        - Objetivo: Agregar resultados de múltiples investigaciones
+        - Herramientas: Búsqueda web y YouTube
+        - Capacidad de delegación habilitada
+        - Verbosidad activada para debugging
+        """
         return Agent(
             role="Research Manager",
             goal=f"""Generate a list of JSON objects containing the urls for 3 recent blog articles and 
@@ -37,6 +95,24 @@ class ResearchAgents():
         )
 
     def research_agent(self) -> Agent:
+        """
+        Crea y configura el agente Research Agent.
+        
+        El Research Agent es responsable de realizar investigaciones específicas
+        sobre una tecnología particular en áreas de negocio específicas. Este agente
+        se enfoca en encontrar contenido relevante como artículos de blog y videos
+        de YouTube sobre la tecnología asignada.
+        
+        Returns:
+            Agent: Agente configurado con rol de Research Agent
+            
+        Características del agente:
+        - Rol: Research Agent
+        - Objetivo: Investigar áreas de negocio específicas para una tecnología
+        - Herramientas: Búsqueda web y YouTube
+        - Enfoque en encontrar contenido real y verificable
+        - Verbosidad activada para debugging
+        """
         return Agent(
             role="Research Agent",
             goal="""Look up the specific business areas for a given technology and find urls for 3 recent blog articles and 

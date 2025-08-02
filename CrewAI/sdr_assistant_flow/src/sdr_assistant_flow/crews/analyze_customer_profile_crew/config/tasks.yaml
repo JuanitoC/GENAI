@@ -1,0 +1,79 @@
+build_lead_profile:
+  description: >
+    Develop a complete profile of the lead to support cold outreach. Analyze the following:
+
+    - Personal Insights:
+      - Name: Full name of the lead.
+      - Job Title: Current title and role.
+      - Role Relevance: Estimate how influential the lead is in the buying process (scale 0–10).
+      - Background Highlights: Optionally include brief career or LinkedIn-style highlights.
+
+    - Company Context:
+      - Company Name: Organization the lead represents.
+      - Industry: Sector or market they operate in.
+      - Company Size: Approximate number of employees.
+      - Revenue: Annual revenue (if available).
+      - Market Presence: Visibility and influence in their market (scale 0–10).
+
+    Our Company:
+    - AI Accelera
+    - What We Offer: Generative AI Services (training, consulting, incubation, VC support)
+    - Ideal Customer Profile: Enterprise firms adopting Generative AI
+    - Core Pitch: Helping you boost ROI with Generative AI.
+
+    - Lead Input:
+      {lead_data}
+  expected_output: >
+    A structured lead profile including:
+    - Key personal and role-based details
+    - Contextual business data to inform outreach
+    - Role relevance and market visibility ratings
+
+assess_engagement_fit:
+  description: >
+    Evaluate the lead and their company to determine readiness and relevance for initial cold outreach:
+
+    - Values & Culture: Look at their stated company culture, innovation focus, and openness to tech.
+    - Alignment with AI Accelera: Determine how well their business goals and tech interests match our offerings.
+    - Readiness Score: Rate how timely and relevant outreach is right now (scale 0–10).
+    - Supporting Notes: Add insights or hooks that could be used in a first-touch email.
+
+    Our Company:
+    - AI Accelera
+    - What We Offer: Generative AI Services (training, consulting, incubation, VC support)
+    - Ideal Customer Profile: Enterprise firms adopting Generative AI
+    - Core Pitch: Helping you boost ROI with Generative AI.
+
+    - Lead Input:
+      {lead_data}
+  expected_output: >
+    A short report including:
+    - Engagement readiness score (0–10)
+    - Key cultural and strategic alignment points
+    - Potential talking points for outreach
+
+generate_lead_readiness_score:
+  description: >
+    Combine all profile and fit data to generate a lead readiness score and prepare a brief strategic summary:
+
+    - Scoring:
+      - Evaluate based on role relevance, company size, market visibility, and engagement fit.
+      - Score from 0 to 100.
+    - Criteria:
+      - Clearly list the scoring dimensions used and how they impact the score.
+    - Summary:
+      - Provide a short narrative summary and any validation adjustments or flags.
+
+    Our Company:
+    - AI Accelera
+    - What We Offer: Generative AI Services (training, consulting, incubation, VC support)
+    - Ideal Customer Profile: Enterprise firms adopting Generative AI
+    - Core Pitch: Helping you boost ROI with Generative AI.
+
+    - Lead Input:
+      {lead_data}
+  expected_output: >
+    A final lead readiness report including:
+    - Total lead score (0–100)
+    - Scoring breakdown and criteria
+    - Summary insights to guide next steps

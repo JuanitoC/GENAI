@@ -1,0 +1,58 @@
+filter_emails:
+  description: >
+    Analyze the following list of unread emails and assign each one to a category: "Urgent", "Informational", "Spam", or "Action Required".
+
+    Emails to analyze (in JSON format):
+    {emails_json}
+
+    🛑 Do not modify the original structure. Preserve the `id` and `threadId` exactly as provided.
+
+    ✅ Your output must be a list of dictionaries, each with:
+    - `id`: original email ID (unchanged)
+    - `threadId`: original Gmail thread ID (unchanged)
+    - `category`: one of the four categories
+    - `justification`: one-sentence explanation of the categorization.
+
+  expected_output: >
+    A list of categorized emails, each with id, threadId, category, and justification.
+
+  agent: email_filter_agent
+  # ❌ Removed: context: [emails]
+
+
+action_required_emails:
+  description: >
+    Review the emails marked as "Action Required" and determine the exact nature of the required action (e.g., reply, schedule meeting, research, delegate).
+
+    For each email, return a dictionary that includes:
+    - The original `id`
+    - The original `threadId` (unchanged)
+    - The identified required action (as a short string)
+    - A brief reason for that action
+
+    ⚠️ Do not replace or rename the threadId. It must exactly match the original input, as it will be used by another tool.
+
+  expected_output: >
+    A list of actionable emails, each with:
+    - `id`
+    - `threadId`
+    - `action`
+    - `reason`
+
+  agent: email_action_agent
+  context:
+    - filter_emails
+
+
+draft_responses:
+  description: >
+    Based on the list of actionable emails, draft appropriate responses for those requiring a reply.
+    
+    Ensure your drafts are professional, relevant, and concise. Use available tools to research any context needed before composing.
+
+  expected_output: >
+    A Markdown-formatted set of email reply drafts, each matched to the original email's subject.
+
+  agent: email_response_writer
+  context:
+    - action_required_emails
