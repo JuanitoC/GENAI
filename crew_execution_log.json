@@ -1,32 +1,9 @@
 [
     {
-        "timestamp": "2025-08-03 19:52:41",
+        "timestamp": "2025-08-04 11:02:07",
         "task_name": null,
         "task": "Busca informaci\u00f3n actualizada sobre el cambio clim\u00e1tico en 2025.",
         "agent": "Investigador web",
         "status": "started"
-    },
-    {
-        "timestamp": "2025-08-03 19:52:47",
-        "task_name": null,
-        "task": "Busca informaci\u00f3n actualizada sobre el cambio clim\u00e1tico en 2025.",
-        "agent": "Investigador web",
-        "status": "completed",
-        "output": "Seg\u00fan un informe reciente de la ONU, se prev\u00e9 que entre 2025 y 2029, la temperatura media global anual cercana a la superficie terrestre sea entre 1,2 \u00b0C y 1,9 \u00b0C superior al promedio del per\u00edodo preindustrial (1850-1900). Este calentamiento global presenta un 70% de probabilidad de superar la cota de 1,5 \u00b0C, una meta cr\u00edtica establecida en el Acuerdo de Par\u00eds. En enero de 2025, se registr\u00f3 el mes m\u00e1s c\u00e1lido desde que existen registros, con una temperatura de 1,75 \u00b0C por encima del nivel preindustrial. Las proyecciones indican que las temperaturas seguir\u00e1n estando en niveles r\u00e9cord en los pr\u00f3ximos a\u00f1os, afectando a millones de personas y aumentando los riesgos clim\u00e1ticos globales."
-    },
-    {
-        "timestamp": "2025-08-03 19:52:47",
-        "task_name": null,
-        "task": "Analiza el texto anterior y cuenta cu\u00e1ntas palabras tiene. Responde solo con el n\u00famero total de palabras.",
-        "agent": "Analista de texto",
-        "status": "started"
-    },
-    {
-        "timestamp": "2025-08-03 19:52:52",
-        "task_name": null,
-        "task": "Analiza el texto anterior y cuenta cu\u00e1ntas palabras tiene. Responde solo con el n\u00famero total de palabras.",
-        "agent": "Analista de texto",
-        "status": "completed",
-        "output": "113"
     }
 ]
